@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ServiceIntro from '../components/ServiceIntro.astro';
+import PricingSection from '../components/PricingSection.astro';
+import ClientSetupEntry from '../components/ClientSetupEntry.astro';
+import ConnectionBasics from '../components/ConnectionBasics.astro';
+import ArticleCardList from '../components/ArticleCardList.astro';
+import UserConcerns from '../components/UserConcerns.astro';
+import Testimonials from '../components/Testimonials.astro';
+import FaqSection from '../components/FaqSection.astro';
+import { faqList } from '../data/faqs';
+import { siteConfig } from '../data/site';
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqList.map(faq => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer
+    }
+  }))
+};
+---
+
+<BaseLayout
+  title={siteConfig.title}
+  description={siteConfig.description}
+  canonicalPath="/"
+  jsonLd={faqSchema}
+>
+  <!-- 1. Hero Section -->
+  <Hero />
+
+  <!-- 2. SpeedCAT Brand Intro & Background -->
+  <ServiceIntro />
+
+  <!-- 3. SpeedCAT Plans Data Table & Rules -->
+  <PricingSection />
+
+  <!-- 4. Client Setup & Subscription Entry Points -->
+  <ClientSetupEntry />
+
+  <!-- 5. Node Connection Basics -->
+  <ConnectionBasics />
+
+  <!-- 6. Six Exclusive Original Guide Articles -->
+  <ArticleCardList />
+
+  <!-- 7. User Evaluation Concerns -->
+  <UserConcerns />
+
+  <!-- 8. User Real Testimonials & Reviews -->
+  <Testimonials />
+
+  <!-- 9. Eight SpeedCAT FAQs (Default Expanded) -->
+  <FaqSection />
+</BaseLayout>

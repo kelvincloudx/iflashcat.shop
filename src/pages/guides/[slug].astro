@@ -1,0 +1,26 @@
+---
+import { articles, type Article } from '../../data/articles';
+import GuideLayout from '../../layouts/GuideLayout.astro';
+import { marked } from 'marked';
+
+export async function getStaticPaths() {
+  return articles.map(article => ({
+    params: { slug: article.slug },
+    props: { article }
+  }));
+}
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+let renderedHtml = await marked.parse(article.content);
+// Ensure all external links to the affiliate URL have the required attributes
+renderedHtml = renderedHtml.replace(
+  /<a\s+href="https:\/\/varnexa\.lingdongaff\.com\/#\/\?code=HHoxxHGa"(?![^>]*target=)[^>]*>/g,
+  '<a href="https://varnexa.lingdongaff.com/#/?code=HHoxxHGa" target="_blank" rel="sponsored nofollow noopener">'
+);
+---
+
+<GuideLayout article={article} renderedHtml={renderedHtml} />

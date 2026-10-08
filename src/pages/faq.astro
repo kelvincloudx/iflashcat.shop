@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FaqSection from '../components/FaqSection.astro';
+import { faqList } from '../data/faqs';
+import { siteConfig } from '../data/site';
+
+const pageTitle = '闪电猫 SpeedCAT 常见问题解答（FAQ）｜闪电猫 SpeedCAT';
+const pageDescription = '针对闪电猫 SpeedCAT 套选选型、流量计算、自动重置、多设备更换、订阅导入与故障排查的 8 大高频核心答疑。';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: '首页',
+      item: 'https://iflashcat.lol/'
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: '常见问题',
+      item: 'https://iflashcat.lol/faq/'
+    }
+  ]
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqList.map(faq => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: faq.answer
+    }
+  }))
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/faq/"
+  jsonLd={[breadcrumbSchema, faqSchema]}
+>
+  <div class="page-header-banner">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="路径导航">
+        <a href="/">首页</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="current-crumb">常见问题</span>
+      </nav>
+      <h1 class="page-title">闪电猫 SpeedCAT 常见问题解答（FAQ）</h1>
+      <p class="page-subtitle">
+        针对套餐选型、流量计算规则、设备更换、订阅配置与故障排查的 8 大核心答疑，所有问题默认展开供方便查阅。
+      </p>
+    </div>
+  </div>
+
+  <!-- FAQ Section (8 SpeedCAT items expanded by default) -->
+  <FaqSection showTitle={false} />
+
+  <!-- Bottom CTA & Helpful Links -->
+  <section class="section faq-bottom-section">
+    <div class="container">
+      <div class="faq-cta-box">
+        <div class="cta-text">
+          <h3>未找到您需要的解答？</h3>
+          <p>
+            查阅我们的 6 篇深度配置教程，或前往闪电猫官方控制台后台核验实时信息。
+          </p>
+        </div>
+        <div class="cta-actions">
+          <a href="/guides/" class="btn btn-outline-dark">
+            查阅使用教程专栏
+          </a>
+          <a 
+            href={siteConfig.affUrl} 
+            target={siteConfig.affTarget} 
+            rel={siteConfig.affRel} 
+            class="btn btn-primary"
+          >
+            {siteConfig.affButtonText}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-header-banner {
+    background: linear-gradient(135deg, #0B0F19 0%, #1C2541 100%);
+    color: #FFFFFF;
+    padding: 60px 0 50px;
+    border-bottom: 1px solid rgba(250, 204, 21, 0.2);
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: #94A3B8;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb a {
+    color: #CBD5E1;
+  }
+
+  .breadcrumb a:hover {
+    color: #FACC15;
+  }
+
+  .current-crumb {
+    color: #FACC15;
+    font-weight: 600;
+  }
+
+  .page-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 14px;
+  }
+
+  .page-subtitle {
+    font-size: 1.1rem;
+    color: #CBD5E1;
+    max-width: 780px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .faq-bottom-section {
+    background: #F8FAFC;
+    padding: 50px 0 80px;
+  }
+
+  .faq-cta-box {
+    background: #FFFFFF;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl);
+    padding: 36px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cta-text h3 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: var(--color-midnight);
+  }
+
+  .cta-text p {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    margin: 0;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 1.8rem;
+    }
+    .page-subtitle {
+      font-size: 0.95rem;
+    }
+    .faq-cta-box {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 24px 20px;
+    }
+    .cta-actions {
+      width: 100%;
+      flex-direction: column;
+    }
+    .cta-actions .btn {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,286 @@
+---
+import { siteConfig } from '../data/site';
+---
+
+<section class="section section-alt section-setup">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">客户端与订阅快速指南</span>
+      <h2>订阅配置与客户端使用入口</h2>
+      <p>
+        四步标准接入流程，轻松在 Windows、macOS、Android 与 iOS 上完成闪电猫节点同步。
+      </p>
+    </div>
+
+    <!-- 4 Step Process Grid -->
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">01</div>
+        <h3 class="step-title">访问管理平台开通</h3>
+        <p class="step-desc">
+          通过商业平台入口完成账号注册，在服务列表中选购适合您流量需求的套餐周期并完成支付。
+        </p>
+        <span class="step-tip">提示：此阶段为 Web 网页操作</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">02</div>
+        <h3 class="step-title">复制加密订阅链接</h3>
+        <p class="step-desc">
+          登录用户后台的“我的订阅”面板，复制系统生成的专属订阅 URL（Token 密匙，切勿泄露给他人）。
+        </p>
+        <span class="step-tip">重点：不可复制网页推广链接</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">03</div>
+        <h3 class="step-title">导入通用代理客户端</h3>
+        <p class="step-desc">
+          在 Clash、ClashParty 或 Shadowrocket 软件中点击新建配置，粘贴订阅链接并一键拉取节点。
+        </p>
+        <span class="step-tip">支持：Windows / Mac / 安卓 / iOS</span>
+      </div>
+
+      <div class="step-card">
+        <div class="step-number">04</div>
+        <h3 class="step-title">开启规则模式畅游</h3>
+        <p class="step-desc">
+          选择网络延迟适中的地区节点，将运行模式设置为“规则模式”，实现国内直连与海外加速分流。
+        </p>
+        <span class="step-tip">建议：定期手动刷新订阅列表</span>
+      </div>
+    </div>
+
+    <!-- Client Matrix Grid -->
+    <div class="clients-platform-box">
+      <h3 class="box-title">主流操作系统客户端适配推荐</h3>
+      <div class="platform-cards">
+        <div class="platform-item">
+          <div class="platform-header">
+            <span class="platform-name">Windows 桌面端</span>
+            <span class="platform-tag">办公主力</span>
+          </div>
+          <p class="platform-desc">推荐 Clash 核心客户端或 ClashParty，支持系统代理与 TUN 虚拟网卡接管，配置直观稳定。</p>
+          <a href="/guides/speedcat-devices/" class="platform-link">查看 Windows 配置细节 →</a>
+        </div>
+
+        <div class="platform-item">
+          <div class="platform-header">
+            <span class="platform-name">Android 移动端</span>
+            <span class="platform-tag">手机随行</span>
+          </div>
+          <p class="platform-desc">适配开源通用工具，支持分应用代理设置与通知栏快速开关，需锁定后台防系统休眠杀进程。</p>
+          <a href="/guides/speedcat-devices/" class="platform-link">查看 Android 配置细节 →</a>
+        </div>
+
+        <div class="platform-item">
+          <div class="platform-header">
+            <span class="platform-name">iOS / iPadOS</span>
+            <span class="platform-tag">苹果生态</span>
+          </div>
+          <p class="platform-desc">需通过非国区 Apple ID 安装 Shadowrocket 等通用工具，扫码或粘贴订阅即可快速加载网络扩展。</p>
+          <a href="/guides/speedcat-devices/" class="platform-link">查看 iOS 配置细节 →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick action links -->
+    <div class="setup-cta-bar">
+      <div class="cta-text">
+        <strong>遇到配置拉取失败或更新报错？</strong>
+        <span>参考我们准备的深度图文教程，快速定位常见网络故障。</span>
+      </div>
+      <div class="cta-actions">
+        <a href="/guides/speedcat-subscription-management/" class="btn btn-outline-dark btn-sm">
+          阅读订阅管理指南
+        </a>
+        <a href="/guides/speedcat-connection-checklist/" class="btn btn-primary btn-sm">
+          排查连接异常
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-setup {
+    background-color: #FFFFFF;
+    padding: 80px 0;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 50px;
+  }
+
+  .step-card {
+    background: #F8FAFC;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: 30px 22px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .step-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #CBD5E1;
+    margin-bottom: 16px;
+    font-family: var(--font-mono);
+  }
+
+  .step-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-midnight);
+    margin-bottom: 10px;
+  }
+
+  .step-desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .step-tip {
+    font-size: 0.75rem;
+    color: var(--color-aurora-purple);
+    font-weight: 600;
+    background: rgba(124, 58, 237, 0.08);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    display: inline-block;
+  }
+
+  .clients-platform-box {
+    background: #F8FAFC;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-xl);
+    padding: 36px 30px;
+    margin-bottom: 40px;
+  }
+
+  .box-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-midnight);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .platform-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .platform-item {
+    background: #FFFFFF;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .platform-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .platform-name {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--color-midnight);
+  }
+
+  .platform-tag {
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    background: #EEF2F6;
+    color: #475569;
+    border-radius: 9999px;
+  }
+
+  .platform-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex: 1;
+  }
+
+  .platform-link {
+    font-size: 0.85rem;
+    color: var(--color-aurora-purple);
+    font-weight: 600;
+  }
+
+  .platform-link:hover {
+    text-decoration: underline;
+  }
+
+  .setup-cta-bar {
+    background: #F1F5F9;
+    border-radius: var(--radius-lg);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .cta-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.92rem;
+    color: var(--color-midnight);
+  }
+
+  .cta-text span {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  @media (max-width: 1024px) {
+    .steps-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .platform-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .steps-grid {
+      grid-template-columns: 1fr;
+    }
+    .setup-cta-bar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .cta-actions {
+      width: 100%;
+      flex-direction: column;
+    }
+    .cta-actions .btn {
+      width: 100%;
+    }
+  }
+</style>

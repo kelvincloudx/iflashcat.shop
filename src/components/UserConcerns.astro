@@ -1,0 +1,122 @@
+---
+---
+
+<section class="section section-concerns">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">理性决策参考</span>
+      <h2>用户常见选购关注点</h2>
+      <p>
+        选购网络订阅服务前，我们建议用户系统核查以下六大关键技术与商务要素，建立清晰预期。
+      </p>
+    </div>
+
+    <div class="concerns-grid">
+      <div class="concern-card">
+        <div class="concern-num">01</div>
+        <h3 class="concern-title">套餐价格与付款周期折算</h3>
+        <p class="concern-text">
+          季付、半年付和年付在结算时均为单次一次性付清的款项，而非每月分期扣款。核对收银台结算货币及最终应付金额，优先建议新接触用户以单月周期起步测试。
+        </p>
+      </div>
+
+      <div class="concern-card">
+        <div class="concern-num">02</div>
+        <h3 class="concern-title">流量额度与重置清零规则</h3>
+        <p class="concern-text">
+          明确所选套餐是每 30 天自动清零重置，还是 365 天有效期内总量扣减用完即止。根据自身视频、浏览或开发的月度耗电与消耗模型匹配对应档位。
+        </p>
+      </div>
+
+      <div class="concern-card">
+        <div class="concern-num">03</div>
+        <h3 class="concern-title">订阅配置链接与个人密钥保护</h3>
+        <p class="concern-text">
+          客户端订阅链接包含个人识别 Token，必须妥善保管并定期在后台刷新。严禁误将外部网页购买推广链接当作客户端配置 URL 导入代理软件。
+        </p>
+      </div>
+
+      <div class="concern-card">
+        <div class="concern-num">04</div>
+        <h3 class="concern-title">多终端并发与设备兼容限制</h3>
+        <p class="concern-text">
+          绝大多数服务均设有在线连接数或异地 IP 并发安全风控。自用电脑、手机与平板可正常接入，但切勿多人合租或将配置公开至公共网络。
+        </p>
+      </div>
+
+      <div class="concern-card">
+        <div class="concern-num">05</div>
+        <h3 class="concern-title">节点网络连通性与本地运营商适配</h3>
+        <p class="concern-text">
+          代理体验受电信、联通、移动本地光纤出口及晚高峰拥塞影响明显。不可仅凭孤立的 Ping 握手数值评判节点好坏，需实测常用服务的真实加载与缓冲。
+        </p>
+      </div>
+
+      <div class="concern-card">
+        <div class="concern-num">06</div>
+        <h3 class="concern-title">退款政策与售后工单条款核验</h3>
+        <p class="concern-text">
+          在下单前仔细阅读服务商公布的《服务条款》（ToS）和退款准则。确认遇到不可用时能否提交工单求助，保障个人消费知情权与资金安全。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-concerns {
+    background-color: #F8FAFC;
+    padding: 80px 0;
+  }
+
+  .concerns-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .concern-card {
+    background: #FFFFFF;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: 30px 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .concern-num {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-aurora-purple);
+    margin-bottom: 14px;
+    font-family: var(--font-mono);
+  }
+
+  .concern-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-midnight);
+    margin-bottom: 12px;
+    line-height: 1.35;
+  }
+
+  .concern-text {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .concerns-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .concerns-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

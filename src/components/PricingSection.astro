@@ -1,0 +1,421 @@
+---
+import { siteConfig } from '../data/site';
+import { speedcatPlans, planNotices } from '../data/speedcat-plans';
+
+interface Props {
+  showTitle?: boolean;
+}
+
+const { showTitle = true } = Astro.props;
+---
+
+<section id="pricing" class="section section-pricing">
+  <div class="container">
+    {showTitle && (
+      <div class="section-header">
+        <span class="section-tag">品牌服务档案</span>
+        <h2>闪电猫 SpeedCAT 套餐列表与规则说明</h2>
+        <p>
+          围绕闪电猫品牌建立的结构化套餐档案。所有套餐参数与销售状态均以闪电猫实时收银台公布的信息为准。
+        </p>
+      </div>
+    )}
+
+    <!-- Verification Notice Box -->
+    <div class="disclaimer-box" role="alert">
+      <div class="disclaimer-header">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <strong>数据核实与销售说明：</strong>
+      </div>
+      <ul class="notice-list">
+        {planNotices.map(item => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- 1. Horizontal Scrollable Data Table for SpeedCAT Plans -->
+    <div class="pricing-table-card">
+      <div class="card-title-bar">
+        <h3>闪电猫当前套餐一览（统一数据源）</h3>
+        <span class="status-pill">数据状态：待登录后台实时核实</span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="speedcat-table">
+          <thead>
+            <tr>
+              <th>套餐名称</th>
+              <th>计费周期</th>
+              <th>流量额度</th>
+              <th>有效期及重置规则</th>
+              <th>设备限制</th>
+              <th>核实状态</th>
+              <th>售价及订阅</th>
+            </tr>
+          </thead>
+          <tbody>
+            {speedcatPlans.map(plan => (
+              <tr>
+                <td class="cell-name">
+                  <strong>{plan.name}</strong>
+                  {plan.badge && <span class="plan-tag">{plan.badge}</span>}
+                </td>
+                <td>{plan.billingCycle}</td>
+                <td class="cell-traffic">{plan.trafficLimit}</td>
+                <td class="cell-rule">{plan.resetRule}</td>
+                <td>{plan.deviceLimit}</td>
+                <td>
+                  <span class="verify-badge">{plan.verificationStatus}</span>
+                </td>
+                <td class="cell-action">
+                  <a 
+                    href={siteConfig.affUrl} 
+                    target={siteConfig.affTarget} 
+                    rel={siteConfig.affRel} 
+                    class="table-btn"
+                  >
+                    前往后台查看
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2. Additional Structural Sections -->
+    <div class="pricing-info-grid">
+      <!-- Traffic Rules Section -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <div class="info-icon">📊</div>
+          <h3>流量规则说明</h3>
+        </div>
+        <ul class="info-bullets">
+          <li><strong>仅代理流量扣减</strong>：在规则分流模式下，仅经过海外节点转发的请求消耗套餐流量。</li>
+          <li><strong>重置周期窗口</strong>：周期型套餐根据订单创建或后台规则执行定期重置，未用完额度不累计。</li>
+          <li><strong>流量明细查询</strong>：具体的己用 MB/GB 数据以闪电猫控制台首页面板实时显示的数值为准。</li>
+        </ul>
+      </div>
+
+      <!-- Pre-subscription Checklist -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <div class="info-icon">📋</div>
+          <h3>订阅前注意事项</h3>
+        </div>
+        <ul class="info-bullets">
+          <li><strong>核实即时上架档位</strong>：部分特惠活动套餐可能具备时效性，请在提交订单前确认库存。</li>
+          <li><strong>付款方式与币种</strong>：结算收银台支持多种标准支付通道，请核对最终应付金额。</li>
+          <li><strong>防误选建议</strong>：首次使用建议优先选择单月周期测试本地网络的真实延迟与稳定性。</li>
+        </ul>
+      </div>
+
+      <!-- Plan FAQ Reference -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <div class="info-icon">❓</div>
+          <h3>套餐常见问题</h3>
+        </div>
+        <ul class="info-bullets">
+          <li><strong>是否会自动扣费？</strong> 取决于所选支付方式与订单设置，默认为单次手动支付续费。</li>
+          <li><strong>更换客户端是否需重新购买？</strong> 不需要。一套订阅链接可在同一账号名下的多端导入。</li>
+          <li><strong>流量耗尽如何处理？</strong> 可在后台查看是否提供额外流量重置扩展包，或等待下周期到来。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CTA Box -->
+    <div class="pricing-cta-bar">
+      <div class="cta-text">
+        <h3>准备好体验闪电猫 SpeedCAT 服务了吗？</h3>
+        <p>登录闪电猫控制台查看最新上架套餐，获取您的专属 Clash 订阅链接。</p>
+      </div>
+      <a 
+        href={siteConfig.affUrl} 
+        target={siteConfig.affTarget} 
+        rel={siteConfig.affRel} 
+        class="btn btn-primary cta-btn"
+      >
+        前往闪电猫订阅官网
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-pricing {
+    background-color: #F8FAFC;
+    padding: 80px 0;
+  }
+
+  .disclaimer-box {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-left: 4px solid #F59E0B;
+    border-radius: var(--radius-md);
+    padding: 20px 24px;
+    margin-bottom: 36px;
+  }
+
+  .disclaimer-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #92400E;
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+
+  .notice-list {
+    margin: 0;
+    padding-left: 20px;
+    color: #B45309;
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .notice-list li {
+    margin-bottom: 6px;
+  }
+
+  .notice-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  .pricing-table-card {
+    background: #FFFFFF;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 16px rgba(11, 15, 25, 0.05);
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+
+  .card-title-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: var(--color-navy-dark);
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(250, 204, 21, 0.2);
+  }
+
+  .card-title-bar h3 {
+    color: #FFFFFF;
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  .status-pill {
+    font-size: 0.8rem;
+    background: rgba(250, 204, 21, 0.15);
+    color: #FACC15;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    border: 1px solid rgba(250, 204, 21, 0.3);
+  }
+
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .speedcat-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.92rem;
+    min-width: 800px;
+  }
+
+  .speedcat-table th {
+    background: #F1F5F9;
+    color: var(--color-midnight);
+    font-weight: 700;
+    padding: 16px 20px;
+    border-bottom: 2px solid var(--color-border-light);
+    white-space: nowrap;
+  }
+
+  .speedcat-table td {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--color-border-light);
+    color: #334155;
+    vertical-align: middle;
+  }
+
+  .speedcat-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .speedcat-table tr:hover td {
+    background-color: #F8FAFC;
+  }
+
+  .cell-name strong {
+    font-size: 1.05rem;
+    color: var(--color-midnight);
+    display: block;
+  }
+
+  .plan-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    background: rgba(245, 158, 11, 0.12);
+    color: #D97706;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .cell-traffic {
+    font-weight: 600;
+    color: #0369A1;
+  }
+
+  .cell-rule {
+    font-size: 0.88rem;
+    color: #64748B;
+  }
+
+  .verify-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #FEF3C7;
+    color: #92400E;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .table-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: var(--color-navy-card);
+    color: #FACC15;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+  }
+
+  .table-btn:hover {
+    background: #0B0F19;
+    color: #FFFFFF;
+  }
+
+  /* Info Grid */
+  .pricing-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .info-card {
+    background: #FFFFFF;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    box-shadow: 0 2px 8px rgba(11, 15, 25, 0.04);
+  }
+
+  .info-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .info-icon {
+    font-size: 1.4rem;
+  }
+
+  .info-card-header h3 {
+    font-size: 1.15rem;
+    margin: 0;
+    color: var(--color-midnight);
+  }
+
+  .info-bullets {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #475569;
+  }
+
+  .info-bullets li {
+    margin-bottom: 10px;
+  }
+
+  .info-bullets li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* CTA Bar */
+  .pricing-cta-bar {
+    background: linear-gradient(135deg, #0B132B 0%, #1C2541 100%);
+    border: 1px solid rgba(250, 204, 21, 0.3);
+    border-radius: var(--radius-xl);
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    color: #FFFFFF;
+    box-shadow: 0 12px 28px rgba(11, 15, 25, 0.15);
+  }
+
+  .cta-text h3 {
+    color: #FACC15;
+    font-size: 1.4rem;
+    margin-bottom: 8px;
+  }
+
+  .cta-text p {
+    color: #CBD5E1;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .cta-btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 992px) {
+    .pricing-info-grid {
+      grid-template-columns: 1fr;
+    }
+    .pricing-cta-bar {
+      flex-direction: column;
+      text-align: center;
+      padding: 30px 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .card-title-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+</style>

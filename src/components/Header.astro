@@ -1,0 +1,296 @@
+---
+import { siteConfig } from '../data/site';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="container header-container">
+    <a href="/" class="brand-logo" aria-label="闪电猫 SpeedCAT 首页">
+      <div class="logo-icon">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="19" fill="#0F172A" stroke="url(#paint0_linear)" stroke-width="2"/>
+          <!-- Abstract cat ears and head -->
+          <path d="M12 15L15 23H25L28 15L23 18H17L12 15Z" fill="#7C3AED"/>
+          <!-- Cyber cat eye accents -->
+          <circle cx="16" cy="21" r="1.5" fill="#22D3EE"/>
+          <circle cx="24" cy="21" r="1.5" fill="#22D3EE"/>
+          <!-- Lightning bolt accent traversing through -->
+          <path d="M22 10L14 22H21L18 30L27 18H20L22 10Z" fill="url(#paint1_linear)"/>
+          <defs>
+            <linearGradient id="paint0_linear" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#7C3AED"/>
+              <stop offset="1" stop-color="#22D3EE"/>
+            </linearGradient>
+            <linearGradient id="paint1_linear" x1="14" y1="10" x2="27" y2="30" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#22D3EE"/>
+              <stop offset="1" stop-color="#FACC15"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">闪电猫</span>
+        <span class="brand-en">SpeedCAT</span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="desktop-nav" aria-label="主要导航">
+      <ul class="nav-links">
+        {siteConfig.navItems.map(item => {
+          const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+          return (
+            <li>
+              <a href={item.href} class={`nav-link ${isActive ? 'active' : ''}`}>
+                {item.name}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <div class="nav-actions">
+        <a 
+          href={siteConfig.affUrl} 
+          target={siteConfig.affTarget} 
+          rel={siteConfig.affRel} 
+          class="btn btn-cyan btn-sm"
+        >
+          {siteConfig.affButtonText}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7"/>
+            <path d="M7 7h10v10"/>
+          </svg>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Mobile Menu Toggle Button -->
+    <button 
+      id="mobile-menu-btn" 
+      class="mobile-toggle" 
+      aria-label="打开导航菜单" 
+      aria-expanded="false" 
+      aria-controls="mobile-nav"
+    >
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown Navigation -->
+  <div id="mobile-nav" class="mobile-nav-menu" hidden>
+    <div class="container mobile-nav-content">
+      <ul class="mobile-nav-links">
+        {siteConfig.navItems.map(item => {
+          const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+          return (
+            <li>
+              <a href={item.href} class={`mobile-nav-link ${isActive ? 'active' : ''}`}>
+                {item.name}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+      <div class="mobile-nav-cta">
+        <a 
+          href={siteConfig.affUrl} 
+          target={siteConfig.affTarget} 
+          rel={siteConfig.affRel} 
+          class="btn btn-cyan"
+        >
+          {siteConfig.affButtonText}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 17L17 7"/>
+            <path d="M7 7h10v10"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Clean, self-contained mobile toggle logic
+  const toggleBtn = document.getElementById('mobile-menu-btn');
+  const mobileNav = document.getElementById('mobile-nav');
+
+  if (toggleBtn && mobileNav) {
+    toggleBtn.addEventListener('click', () => {
+      const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+      if (isExpanded) {
+        mobileNav.hidden = true;
+        toggleBtn.classList.remove('active');
+      } else {
+        mobileNav.hidden = false;
+        toggleBtn.classList.add('active');
+      }
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (!toggleBtn.contains(target) && !mobileNav.contains(target)) {
+        mobileNav.hidden = true;
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.classList.remove('active');
+      }
+    });
+  }
+</script>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(248, 250, 252, 0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+    transition: all 0.2s ease;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+  }
+
+  .brand-name {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-midnight);
+    letter-spacing: -0.02em;
+  }
+
+  .brand-en {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-aurora-purple);
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .nav-link {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-dark);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    transition: all 0.2s ease;
+  }
+
+  .nav-link:hover, .nav-link.active {
+    color: var(--color-aurora-purple);
+    background: rgba(124, 58, 237, 0.06);
+  }
+
+  .mobile-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    cursor: pointer;
+  }
+
+  .hamburger-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-midnight);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .mobile-toggle.active .hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .mobile-toggle.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .mobile-toggle.active .hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .mobile-nav-menu {
+    border-top: 1px solid var(--color-border-light);
+    background: #FFFFFF;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .mobile-nav-content {
+    padding: 20px;
+  }
+
+  .mobile-nav-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text-dark);
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+  }
+
+  .mobile-nav-link.active, .mobile-nav-link:hover {
+    color: var(--color-aurora-purple);
+    background: rgba(124, 58, 237, 0.08);
+  }
+
+  @media (max-width: 820px) {
+    .desktop-nav {
+      display: none;
+    }
+
+    .mobile-toggle {
+      display: flex;
+    }
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PricingSection from '../components/PricingSection.astro';
+import UserConcerns from '../components/UserConcerns.astro';
+import { siteConfig } from '../data/site';
+
+const pageTitle = '闪电猫 SpeedCAT 套餐价格与规则说明｜闪电猫 SpeedCAT';
+const pageDescription = '查看闪电猫 SpeedCAT 当前在线套餐列表、流量重置逻辑、订阅注意事项与实操指南。';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: '首页',
+      item: 'https://iflashcat.lol/'
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: '套餐价格',
+      item: 'https://iflashcat.lol/pricing/'
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalPath="/pricing/"
+  jsonLd={breadcrumbSchema}
+>
+  <div class="page-header-banner">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="路径导航">
+        <a href="/">首页</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="current-crumb">套餐价格</span>
+      </nav>
+      <h1 class="page-title">闪电猫 SpeedCAT 套餐价格与规则说明</h1>
+      <p class="page-subtitle">
+        围绕闪电猫品牌建立的统一套餐数据模型，包含流量重置规则、使用注意事项及订阅提示。
+      </p>
+    </div>
+  </div>
+
+  <!-- Pricing Table Section -->
+  <PricingSection showTitle={false} />
+
+  <!-- Purchase Checklist -->
+  <UserConcerns />
+</BaseLayout>
+
+<style>
+  .page-header-banner {
+    background: linear-gradient(135deg, #0B0F19 0%, #1C2541 100%);
+    color: #FFFFFF;
+    padding: 60px 0 50px;
+    border-bottom: 1px solid rgba(250, 204, 21, 0.2);
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: #94A3B8;
+    margin-bottom: 20px;
+  }
+
+  .breadcrumb a {
+    color: #CBD5E1;
+  }
+
+  .breadcrumb a:hover {
+    color: #FACC15;
+  }
+
+  .current-crumb {
+    color: #FACC15;
+    font-weight: 600;
+  }
+
+  .page-title {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 14px;
+  }
+
+  .page-subtitle {
+    font-size: 1.1rem;
+    color: #CBD5E1;
+    max-width: 780px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 1.8rem;
+    }
+    .page-subtitle {
+      font-size: 0.95rem;
+    }
+  }
+</style>

@@ -1,0 +1,122 @@
+---
+---
+
+<section class="section section-connection-basics">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">技术认知与网络原理</span>
+      <h2>节点连接常见知识</h2>
+      <p>
+        掌握代理通信的底层原理与常见指标含义，避免常见误区，提升日常上网稳定性。
+      </p>
+    </div>
+
+    <div class="basics-grid">
+      <div class="basic-item">
+        <div class="basic-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3 class="basic-title">握手延迟 vs 真实下载速度</h3>
+        <p class="basic-desc">
+          客户端中显示的延迟数值（如 45ms）通常仅代表本地与入口服务器的 TCP/ICMP 握手耗时，并不等同于节点出口到目标网站的真实满速吞吐能力。判断节点品质需综合看丢包率与持续带宽。
+        </p>
+      </div>
+
+      <div class="basic-item">
+        <div class="basic-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <h3 class="basic-title">系统时钟误差导致握手失败</h3>
+        <p class="basic-desc">
+          现代代理协议普遍基于加密时间戳鉴权。如果您的手机或计算机系统时间与北京时间误差超过 90 秒，服务端的防重放安全策略将直接拒绝握手，导致全节点超时，需开启自动时间同步。
+        </p>
+      </div>
+
+      <div class="basic-item">
+        <div class="basic-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <h3 class="basic-title">DNS 污染与 Fake-IP 机制</h3>
+        <p class="basic-desc">
+          访问海外域名时本地运营商解析可能返回虚假不可达 IP。客户端通过 Fake-IP 或远端代理解析技术，将域名解析移交至远端节点，从根本上避开本地 DNS 污染造成的网页打不开。
+        </p>
+      </div>
+
+      <div class="basic-item">
+        <div class="basic-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3 class="basic-title">IP 漂移与账户人机验证</h3>
+        <p class="basic-desc">
+          若开启节点自动测速轮询，几分钟内出口 IP 可能在香港、日本、新加坡之间连续切换，易引发海外搜索或银行平台的风控人机验证。日常使用建议固定在某一个主用节点。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-connection-basics {
+    background-color: #F8FAFC;
+    padding: 80px 0;
+  }
+
+  .basics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+  }
+
+  .basic-item {
+    background: #FFFFFF;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: 32px 26px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .basic-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    background: rgba(124, 58, 237, 0.1);
+    color: var(--color-aurora-purple);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .basic-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-midnight);
+    margin-bottom: 12px;
+  }
+
+  .basic-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .basics-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

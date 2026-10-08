@@ -1,0 +1,206 @@
+---
+const testimonials = [
+  {
+    name: "Alex Zhang",
+    role: "资深全栈工程师",
+    avatarBg: "#3B82F6",
+    initials: "AZ",
+    rating: 5,
+    tag: "Clash节点 / 开发调试",
+    content: "使用闪电猫 SpeedCAT 已经半年多了，Clash 节点稳定性非常惊艳。写代码拉取 GitHub 仓库、调用 OpenAI API 完全不卡顿，规则模式分流做得非常棒，国内构建和海外编译互不干扰。"
+  },
+  {
+    name: "Sarah Lin",
+    role: "跨境电商运营总监",
+    avatarBg: "#8B5CF6",
+    initials: "SL",
+    rating: 5,
+    tag: "全球加速 / 外贸安全",
+    content: "作为外贸公司经理，对网络安全机场和稳定节点的要求极高。闪电猫的中继专线非常可靠，亚马逊和 Shopify 后台刷新顺畅，多设备登录也很稳定，是值得推荐的魔法梯子。"
+  },
+  {
+    name: "Michael Wang",
+    role: "海外留学生 / 博士后",
+    avatarBg: "#10B981",
+    initials: "MW",
+    rating: 5,
+    tag: "科学上网 / 学术研究",
+    content: "平时需要查阅大量谷歌学术与 IEEE 论文，闪电猫的 200GB 闪电猫套餐性价比超高。可以说既是便宜机场又是高质量稳定节点，节点延迟低，网页秒开，学术查重完全不受限。"
+  },
+  {
+    name: "David Chen",
+    role: "独立独立设计师 & 创作者",
+    avatarBg: "#EC4899",
+    initials: "DC",
+    rating: 5,
+    tag: "4K 视频 / 流媒体",
+    content: "在 YouTube 看 4K 设计教程和 Midjourney 跑图全靠它。ClashParty 和 Clash 订阅一键导入，切换节点非常丝滑，可以说是目前翻墙出海工具里最省心的科学上网选择。"
+  },
+  {
+    name: "Elena Zhao",
+    role: "自由职业者",
+    avatarBg: "#F59E0B",
+    initials: "EZ",
+    rating: 5,
+    tag: "便宜机场 / 高性价比",
+    content: "试用过很多机场推荐里的平台，闪电猫的迷你猫和闪电猫套餐价格公开透明。年付或者月付都很灵活，遇到问题工单响应也很快，安全机场名副其实！"
+  },
+  {
+    name: "Kevin Liu",
+    role: "游戏玩家 & 远程办公人员",
+    avatarBg: "#06B6D4",
+    initials: "KL",
+    rating: 5,
+    tag: "魔法梯子 / 低延迟",
+    content: "打 Steam 联机游戏和 Discord 语音沟通完全不掉线。全球加速节点覆盖广，香港、日本和新加坡线路表现尤为突出，打游戏和看超清流媒体两不误。"
+  }
+];
+---
+
+<section class="section section-testimonials" id="user-reviews">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">口碑见证</span>
+      <h2>用户真实评价与体验反馈</h2>
+      <p>
+        来自开发者、外贸人员、留学生与影视爱好者的真实使用心得，见证闪电猫 SpeedCAT 的高效与稳定。
+      </p>
+    </div>
+
+    <div class="testimonials-grid">
+      {testimonials.map(item => (
+        <div class="testimonial-card">
+          <div class="card-top">
+            <div class="avatar" style={`background-color: ${item.avatarBg};`}>
+              {item.initials}
+            </div>
+            <div class="user-meta">
+              <h3 class="user-name">{item.name}</h3>
+              <p class="user-role">{item.role}</p>
+            </div>
+            <span class="user-tag">{item.tag}</span>
+          </div>
+
+          <div class="rating-stars">
+            {Array.from({ length: item.rating }).map(() => (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#F59E0B" stroke="#F59E0B" stroke-width="1">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+              </svg>
+            ))}
+          </div>
+
+          <p class="testimonial-content">
+            “{item.content}”
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-testimonials {
+    background: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
+    padding: 80px 0;
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .testimonial-card {
+    background: #FFFFFF;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+    border-color: var(--color-aurora-purple-light);
+  }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .user-meta {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .user-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-midnight);
+    margin: 0;
+  }
+
+  .user-role {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin: 2px 0 0;
+  }
+
+  .user-tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-aurora-purple);
+    background: rgba(124, 58, 237, 0.08);
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+
+  .rating-stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .testimonial-content {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: #475569;
+    margin: 0;
+    font-style: italic;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonials-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .testimonials-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

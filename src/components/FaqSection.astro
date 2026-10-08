@@ -1,0 +1,109 @@
+---
+import { faqList } from '../data/faqs';
+
+interface Props {
+  showTitle?: boolean;
+}
+
+const { showTitle = true } = Astro.props;
+---
+
+<section id="faq" class="section section-alt section-faq">
+  <div class="container">
+    {showTitle && (
+      <div class="section-header">
+        <span class="section-tag">疑问答疑</span>
+        <h2>闪电猫 SpeedCAT 常见问题解答</h2>
+        <p>
+          整理用户最关心的套餐规格、付款周期、订阅机制及网络连接等关键问题，所有答案默认完整展示。
+        </p>
+      </div>
+    )}
+
+    <div class="faq-list">
+      {faqList.map(faq => (
+        <div class="faq-item" id={`faq-${faq.id}`}>
+          <div class="faq-question-row">
+            <span class="faq-badge">Q{faq.id}</span>
+            <h3 class="faq-question">{faq.question}</h3>
+          </div>
+          <div class="faq-answer-block">
+            <p class="faq-answer">{faq.answer}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .section-faq {
+    background-color: #FFFFFF;
+    padding: 80px 0;
+  }
+
+  .faq-list {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--color-border-light);
+    padding: 28px 0;
+  }
+
+  .faq-item:first-child {
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .faq-question-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .faq-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 28px;
+    background: rgba(124, 58, 237, 0.1);
+    color: var(--color-aurora-purple);
+    font-size: 0.85rem;
+    font-weight: 800;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+  }
+
+  .faq-question {
+    font-size: 1.22rem;
+    font-weight: 700;
+    color: var(--color-midnight);
+    line-height: 1.4;
+  }
+
+  .faq-answer-block {
+    padding-left: 48px;
+  }
+
+  .faq-answer {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: #475569;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .faq-answer-block {
+      padding-left: 0;
+      margin-top: 10px;
+    }
+    .faq-question {
+      font-size: 1.05rem;
+    }
+  }
+</style>

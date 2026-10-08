@@ -1,0 +1,385 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { type Article, articles } from '../data/articles';
+import { siteConfig } from '../data/site';
+
+interface Props {
+  article: Article;
+  renderedHtml: string;
+}
+
+const { article, renderedHtml } = Astro.props;
+
+// Related articles lookup
+const relatedArticles = article.relatedSlugs
+  .map(slug => articles.find(a => a.slug === slug))
+  .filter(Boolean) as Article[];
+
+const canonicalPath = `/guides/${article.slug}/`;
+const pageTitle = `${article.title}｜闪电猫 SpeedCAT`;
+
+// SEO & GEO Structured Data
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: '首页',
+      item: 'https://iflashcat.lol/'
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: '使用教程',
+      item: 'https://iflashcat.lol/guides/'
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: article.title,
+      item: `https://iflashcat.lol${canonicalPath}`
+    }
+  ]
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: article.title,
+  description: article.description,
+  datePublished: `${article.date}T08:00:00+08:00`,
+  dateModified: `${article.date}T08:00:00+08:00`,
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `https://iflashcat.lol${canonicalPath}`
+  },
+  author: {
+    '@type': 'Organization',
+    name: siteConfig.author
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: '闪电猫 SpeedCAT',
+    url: 'https://iflashcat.lol/'
+  },
+  keywords: article.keywords.join(', ')
+};
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={article.description}
+  canonicalPath={canonicalPath}
+  ogType="article"
+  jsonLd={[breadcrumbSchema, articleSchema]}
+>
+  <div class="article-page-wrap">
+    <div class="container">
+      <!-- Breadcrumb navigation -->
+      <nav class="breadcrumb" aria-label="路径导航">
+        <a href="/">首页</a>
+        <span class="breadcrumb-separator">/</span>
+        <a href="/guides/">使用教程</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="current-crumb">{article.title}</span>
+      </nav>
+
+      <!-- Editorial Layout -->
+      <article class="article-editorial">
+        <div class="article-header">
+          <div class="header-tags">
+            <span class="badge badge-yellow">{article.category}</span>
+            <span class="read-estimate">预计阅读时长：{article.readTime}</span>
+            <span class="publish-time">更新日期：{article.date}</span>
+          </div>
+
+          <h1 class="main-title">{article.title}</h1>
+
+          <div class="article-lead">
+            <strong>核心提要：</strong>{article.summary}
+          </div>
+        </div>
+
+        <!-- Markdown Body Content -->
+        <div class="article-body" set:html={renderedHtml} />
+
+        <!-- Article Footer / Navigation & Links -->
+        <footer class="article-end-section">
+          <!-- CTA Banner -->
+          <div class="guide-cta-card">
+            <div class="cta-inner-text">
+              <h3>准备选购或测试闪电猫套餐？</h3>
+              <p>
+                建议先核对官方实时售卖货架与可用付款周期，新用户可优先通过短周期进行网络可用性实测。
+              </p>
+            </div>
+            <div class="cta-inner-action">
+              <a 
+                href={siteConfig.affUrl} 
+                target={siteConfig.affTarget} 
+                rel={siteConfig.affRel} 
+                class="btn btn-primary"
+              >
+                {siteConfig.affButtonText}
+              </a>
+            </div>
+          </div>
+
+          <!-- Internal Navigation Hub -->
+          <div class="nav-hub-box">
+            <h3 class="hub-title">相关站内指引与价格导航</h3>
+            <div class="hub-links">
+              <a href="/pricing/" class="hub-link-item">
+                <span class="hub-link-icon">📊</span>
+                <span class="hub-link-text">查阅闪电猫当前套餐与价格说明</span>
+              </a>
+              <a href="/faq/" class="hub-link-item">
+                <span class="hub-link-icon">❓</span>
+                <span class="hub-link-text">查看关于闪电猫的高频问答 FAQ</span>
+              </a>
+              <a href="/guides/" class="hub-link-item">
+                <span class="hub-link-icon">📚</span>
+                <span class="hub-link-text">返回闪电猫使用指南专栏首页</span>
+              </a>
+              <a href="/" class="hub-link-item">
+                <span class="hub-link-icon">🏠</span>
+                <span class="hub-link-text">返回闪电猫官网首页</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Related Articles -->
+          {relatedArticles.length > 0 && (
+            <div class="related-section">
+              <h3 class="related-title">延伸阅读专栏文章</h3>
+              <div class="related-grid">
+                {relatedArticles.map(rel => (
+                  <div class="related-card">
+                    <span class="related-cat">{rel.category}</span>
+                    <h4 class="related-item-title">
+                      <a href={`/guides/${rel.slug}/`}>{rel.title}</a>
+                    </h4>
+                    <p class="related-desc">{rel.summary}</p>
+                    <a href={`/guides/${rel.slug}/`} class="related-read-more">阅读此篇 →</a>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </footer>
+      </article>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .article-page-wrap {
+    padding: 30px 0 80px;
+    background: #FFFFFF;
+  }
+
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    margin-bottom: 30px;
+  }
+
+  .breadcrumb a {
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumb a:hover {
+    color: #D97706;
+  }
+
+  .current-crumb {
+    color: var(--color-midnight);
+    font-weight: 500;
+  }
+
+  .article-editorial {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .article-header {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .header-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .main-title {
+    font-size: 2.3rem;
+    line-height: 1.35;
+    color: var(--color-midnight);
+    margin-bottom: 20px;
+  }
+
+  .article-lead {
+    background: #F8FAFC;
+    border-left: 4px solid var(--color-electric-yellow);
+    padding: 18px 22px;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    font-size: 1.05rem;
+    color: #334155;
+    line-height: 1.75;
+  }
+
+  /* Footer Section of Article */
+  .article-end-section {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px solid var(--color-border-light);
+  }
+
+  .guide-cta-card {
+    background: linear-gradient(135deg, #0B0F19 0%, #1C2541 100%);
+    border: 1px solid rgba(250, 204, 21, 0.3);
+    border-radius: var(--radius-lg);
+    padding: 34px 30px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .cta-inner-text h3 {
+    color: #FACC15;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+  }
+
+  .cta-inner-text p {
+    color: #CBD5E1;
+    font-size: 0.92rem;
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  .nav-hub-box {
+    background: #F8FAFC;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    margin-bottom: 40px;
+  }
+
+  .hub-title {
+    font-size: 1.18rem;
+    margin-bottom: 16px;
+    color: var(--color-midnight);
+  }
+
+  .hub-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .hub-link-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: #FFFFFF;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    color: var(--color-midnight);
+    transition: all 0.2s ease;
+  }
+
+  .hub-link-item:hover {
+    border-color: #D97706;
+    color: #D97706;
+    transform: translateY(-2px);
+  }
+
+  .related-section {
+    margin-top: 40px;
+  }
+
+  .related-title {
+    font-size: 1.25rem;
+    margin-bottom: 20px;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .related-card {
+    background: #F8FAFC;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .related-cat {
+    font-size: 0.75rem;
+    color: #D97706;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .related-item-title {
+    font-size: 1.05rem;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  .related-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin-bottom: 12px;
+    flex: 1;
+  }
+
+  .related-read-more {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #D97706;
+  }
+
+  @media (max-width: 768px) {
+    .main-title {
+      font-size: 1.75rem;
+    }
+    .guide-cta-card {
+      flex-direction: column;
+      text-align: left;
+    }
+    .guide-cta-card .btn {
+      width: 100%;
+    }
+    .hub-links {
+      grid-template-columns: 1fr;
+    }
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
